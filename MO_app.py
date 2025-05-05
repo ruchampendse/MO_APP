@@ -95,12 +95,13 @@ final_data2['score']=0
 for i in cats_dict.keys():
   if i in cats:
     final_data2['score'] = final_data2.apply(lambda x: x[i+'_normdiff']+x['score'] if x[i+'_diff']*cats_dict[i]>0 else x['score']-x[i+'_normdiff'],axis=1)
-final_data2['Score_after_age_pt']=final_data2.apply(lambda x: x['score']*1.5 if int(re.findall(r"\d+",x['Age'])[0])>50 else x['score'],axis=1)
+age_factor = int(st.text_input("Select Age factor (Default = 1.5, 150% score)", 1.5))
+final_data2['Score_after_age_pt']=final_data2.apply(lambda x: x['score']*age_factor if int(re.findall(r"\d+",x['Age'])[0])>50 else x['score'],axis=1)
 final_data2.sort_values('Score_after_age_pt',ascending=False,inplace=True)
 final_data2.to_excel("Changed_master_data.xlsx",index=False)
 
 st.divider()
-st.write(f"The Approach of the analysis:\n1. Categories considered are {cats}\n2. Differences are calculated for each category. (Last Test number - First test number)\n3. All differences for each category are normalized (0 to 1).\n4. Normalized values are added to create a score (depending on direction of improvment)")
+st.write(f"The Approach of the analysis:\n1. Categories considered are {cats}\n2. Differences are calculated for each category. (Last Test number - First test number)\n3. All differences for each category are normalized (0 to 1).\n4. Normalized values are added to create a score (depending on direction of improvment)\n5. Scores are multiplied by age factor for participants with age >50 years")
 st.divider()
 st.title(":blue[Aajol Marathas leaderboard !] :sunglasses:")
 st.dataframe(final_data2[['Name','Age']+[i+'_diff' for i in cats]+['score','Score_after_age_pt']])
