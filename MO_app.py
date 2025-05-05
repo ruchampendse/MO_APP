@@ -95,7 +95,8 @@ final_data2['score']=0
 for i in cats_dict.keys():
   if i in cats:
     final_data2['score'] = final_data2.apply(lambda x: x[i+'_normdiff']+x['score'] if x[i+'_diff']*cats_dict[i]>0 else x['score']-x[i+'_normdiff'],axis=1)
-age_factor = int(st.text_input("Select Age factor (Default = 1.5, 150% score)", "1.5"))
+age_factor = st.text_input("Select Age factor (Default = 1.5, 150% score)", "1.5")
+st.write(age_factor)
 final_data2['Score_after_age_pt']=final_data2.apply(lambda x: x['score']*age_factor if int(re.findall(r"\d+",x['Age'])[0])>50 else x['score'],axis=1)
 final_data2.sort_values('Score_after_age_pt',ascending=False,inplace=True)
 final_data2.to_excel("Changed_master_data.xlsx",index=False)
