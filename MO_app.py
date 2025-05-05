@@ -97,8 +97,9 @@ for i in cats_dict.keys():
     final_data2['score'] = final_data2.apply(lambda x: x[i+'_normdiff']+x['score'] if x[i+'_diff']*cats_dict[i]>0 else x['score']-x[i+'_normdiff'],axis=1)
 final_data2['Score_after_age_pt']=final_data2.apply(lambda x: x['score']*1.5 if int(re.findall(r"\d+",x['Age'])[0])>50 else x['score'],axis=1)
 final_data2.sort_values('Score_after_age_pt',ascending=False,inplace=True)
-st.divider()  # Draws a horizontal rule
+final_data2.to_excel("Changed_master_data.xlsx",index=False)
 
+st.divider()
 st.write(f"The Approach of the analysis:\n1. Categories considered are {cats}")
 st.divider()
 st.title(":blue[Aajol Marathas leaderboard !] :sunglasses:")
