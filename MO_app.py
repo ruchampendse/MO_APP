@@ -100,7 +100,7 @@ final_data2.sort_values('Score_after_age_pt',ascending=False,inplace=True)
 final_data2.to_excel("Changed_master_data.xlsx",index=False)
 
 st.divider()
-st.write(f"The Approach of the analysis:\n1. Categories considered are {cats}")
+st.write(f"The Approach of the analysis:\n1. Categories considered are {cats}\n2. Differences are calculated for each category. (Last Test number - First test number)\n3. All differences for each category are normalized (0 to 1).\n4. Normalized values are added to create a score (depending on direction of improvment)")
 st.divider()
 st.title(":blue[Aajol Marathas leaderboard !] :sunglasses:")
 st.dataframe(final_data2[['Name','Age']+[i+'_diff' for i in cats]+['score','Score_after_age_pt']])
